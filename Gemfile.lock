@@ -286,7 +286,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   mysql2 (~> 0.5)
-  pg
+  pg (~> 1.4)
   puma (>= 5.0)
   rails (~> 7.1.0)
   rubocop (= 1.71.2)

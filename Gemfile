@@ -72,6 +72,4 @@ end
 
 gem 'active_hash'
 
-group :production do
-gem 'pg'
-end
+gem 'pg', '~> 1.4'
