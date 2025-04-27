@@ -19,7 +19,8 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential default-libmysqlclient-dev git libvips pkg-config
+    apt-get install --no-install-recommends -y build-essential default-libmysqlclient-dev libpq-dev \
+    git libvips pkg-config
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -42,7 +43,8 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl default-mysql-client libvips && \
+    apt-get install --no-install-recommends -y curl default-mysql-client postgresql-client libpq-dev libvips && \
+    rm -rf /var/lib/apt/lists/*
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
