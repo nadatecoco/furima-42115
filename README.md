@@ -57,7 +57,7 @@ Items（商品情報）
 
 ### Association
 - belongs_to :user
-- has_one    :buyers
+- has_one    :buyer
 
 Buyers(配送先情報)
 
@@ -81,7 +81,7 @@ Addresses（配送先住所）
 | address_line   | string     | null: false                    |
 | building_name  | string     |                                |
 | phone_number   | string     | null: false                    |
-| buyers         | references | null: false, foreign_key: true |
+| buyer          | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :buyer
