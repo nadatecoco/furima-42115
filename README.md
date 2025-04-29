@@ -53,22 +53,22 @@ Items（商品情報）
 | origin_area_id              | integer   | null: false                      |
 | days_until_shipping_id      | integer   | null: false                      |
 | price                       | integer   | null: false                      |
-| users                       | references| null: false, foreign_key: true   |
+| user                        | references| null: false, foreign_key: true   |
 
 ### Association
-- belongs_to :users
-- has_one    :purchase
+- belongs_to :user
+- has_one    :buyers
 
 Buyers(配送先情報)
 
 | Column  | Type       | Options                        |
 |---------|------------|--------------------------------|
-| users   | references | null: false, foreign_key: true |
-| items   | references | null: false, foreign_key: true 
+| user    | references | null: false, foreign_key: true |
+| item    | references | null: false, foreign_key: true 
 
 ### Association
-- belongs_to :users
-- belongs_to :items
+- belongs_to :user
+- belongs_to :item
 - has_one    :address
 
 Addresses（配送先住所）
@@ -84,4 +84,4 @@ Addresses（配送先住所）
 | buyers         | references | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :buyers
+- belongs_to :buyer
