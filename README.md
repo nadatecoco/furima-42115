@@ -38,7 +38,7 @@ Users（ユーザー情報）
 
 ### Association
 - has_many :items
-- has_many :buyer
+- has_many :buyers
 
 
 Items（商品情報）
@@ -47,28 +47,28 @@ Items（商品情報）
 |-----------------------------|-----------|----------------------------------|
 | title                       | string    | null: false                      |
 | description                 | text      | null: false                      |
-| price                       | string    | null: false                      |
 | category_id                 | integer   | null: false                      |
 | condition_id                | integer   | null: false                      |
-| price_id                    | integer   | null: false                      |
 | fee_burden_id               | integer   | null: false                      |
 | origin_area_id              | integer   | null: false                      |
-| user                        | references | null: false, foreign_key: true  |
+| days_until_shipping_id      | integer   | null: false                      |
+| price                       | integer   | null: false                      |
+| users                       | references| null: false, foreign_key: true   |
 
 ### Association
-- belongs_to :user
+- belongs_to :users
 - has_one    :purchase
 
-Buyer(配送先情報)
+Buyers(配送先情報)
 
 | Column  | Type       | Options                        |
 |---------|------------|--------------------------------|
-| user    | references | null: false, foreign_key: true |
-| item    | references | null: false, foreign_key: true 
+| users   | references | null: false, foreign_key: true |
+| items   | references | null: false, foreign_key: true 
 
 ### Association
-- belongs_to :user
-- belongs_to :item
+- belongs_to :users
+- belongs_to :items
 - has_one    :address
 
 Addresses（配送先住所）
@@ -81,7 +81,7 @@ Addresses（配送先住所）
 | address_line   | string     | null: false                    |
 | building_name  | string     |                                |
 | phone_number   | string     | null: false                    |
-| purchase       | references | null: false, foreign_key: true |
+| buyers         | references | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :buyer
+- belongs_to :buyers
