@@ -4,8 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :email, presence: true
-  validates :password, presence: true
   validates :nickname, presence: true
 
   ZENKAKU_REGEX       = /\A[ぁ-んァ-ン一-龥々ー]+\z/
