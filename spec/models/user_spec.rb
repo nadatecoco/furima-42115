@@ -48,5 +48,65 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
     end
 
+    it 'nickname がない' do
+      @user.nickname = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Nickname can't be blank"
+    end
+
+    it 'last_name がない' do
+      @user.last_name = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Last name can't be blank"
+    end
+
+    it 'last_name が半角' do
+      @user.last_name = 'yamada'
+      @user.valid?
+      expect(@user.errors.full_messages).to include 'Last name is invalid'
+    end
+
+    it 'first_name がない' do
+      @user.first_name = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include "First name can't be blank"
+    end
+
+    it 'first_name が半角' do
+      @user.first_name = 'tarou'
+      @user.valid?
+      expect(@user.errors.full_messages).to include 'First name is invalid'
+    end
+
+    it 'kana_last_name がない' do
+      @user.kana_last_name = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Kana last name can't be blank"
+    end
+
+    it 'kana_last_name がカタカナ以外' do
+      @user.kana_last_name = 'やまだ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include 'Kana last name is invalid'
+    end
+
+    it 'kana_first_name がない' do
+      @user.kana_first_name = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Kana first name can't be blank"
+    end
+
+    it 'kana_first_name がカタカナ以外' do
+      @user.kana_first_name = 'たろう'
+      @user.valid?
+      expect(@user.errors.full_messages).to include 'Kana first name is invalid'
+    end
+
+    it 'birthday がない' do
+      @user.birthday = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Birthday can't be blank"
+    end
+
   end
 end
