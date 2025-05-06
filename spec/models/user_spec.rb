@@ -122,11 +122,10 @@ RSpec.describe User, type: :model do
       end
   
       it 'passwordに全角がある' do
-        @user.password = @user.password_confirmation = 'abc123'
+        @user.password = @user.password_confirmation = 'ａｂｃ123'
         @user.valid?
         expect(@user.errors.full_messages)
           .to include('Password is invalid. Include both letters and numbers')
       end
-
   end
 end
