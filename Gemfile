@@ -65,6 +65,9 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'rspec-rails', '~> 4.0.0'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 group :development do
   gem 'rubocop', '1.71.2', require: false
@@ -73,3 +76,5 @@ end
 gem 'active_hash'
 
 gem 'pg', '~> 1.4'
+
+gem 'devise'
