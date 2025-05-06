@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   validates :nickname, presence: true
 
-  ZENKAKU_REGEX       = /\A[ぁ-んァ-ン一-龥々ー]+\z/
+  ZENKAKU_REGEX       = /\A[ぁ-んァ-ヶ一-龥々ー]+\z/
   ZENKAKU_KATA_REGEX  = /\A[ァ-ヶー]+\z/
   VALID_PASSWORD_REGEX = /\A(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]+\z/
   validates :password,format: { with: VALID_PASSWORD_REGEX,message: 'is invalid. Include both letters and numbers' }
