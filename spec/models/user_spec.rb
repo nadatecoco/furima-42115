@@ -107,6 +107,26 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include "Birthday can't be blank"
     end
+      it 'passwordが英字のみ' do
+        @user.password = @user.password_confirmation = 'abcdef'
+        @user.valid?
+        expect(@user.errors.full_messages)
+          .to include('Password is invalid. Include both letters and numbers')
+      end
+  
+      it 'passwordが数字のみ' do
+        @user.password = @user.password_confirmation = '123456'
+        @user.valid?
+        expect(@user.errors.full_messages)
+          .to include('Password is invalid. Include both letters and numbers')
+      end
+  
+      it 'passwordに全角がある' do
+        @user.password = @user.password_confirmation = 'abc123'
+        @user.valid?
+        expect(@user.errors.full_messages)
+          .to include('Password is invalid. Include both letters and numbers')
+      end
 
   end
 end
