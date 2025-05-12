@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
-
-  get 'items/index'
   devise_for :users
-  root to: 'items#index' 
+  root to: 'items#index'
   resources :items
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
