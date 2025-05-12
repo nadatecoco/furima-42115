@@ -1,20 +1,17 @@
-class Item < ApplicationRecord
-  # ActiveHash の関連（category など）を有効化
-  extend ActiveHash::Associations::ActiveRecordExtensions
+class CreateItems < ActiveRecord::Migration[7.0]
+  def change
+    create_table :items do |t|
+      t.string :title, null: false
+      t.text :description, null: false
+      t.integer :category_id, null: false
+      t.integer :condition_id, null: false
+      t.integer :fee_burden_id, null: false
+      t.integer :origin_area_id, null: false
+      t.integer :days_until_shipping_id, null: false
+      t.integer :price, null: false
+      t.references :user, null: false, foreign_key: true
 
-  belongs_to :user
-  belongs_to :category
-  belongs_to :condition
-  belongs_to :fee_burden
-  belongs_to :origin_area
-  belongs_to :days_until_shipping
-
-  validates :title, presence: true
-  validates :description, presence: true
-  validates :category_id, presence: true
-  validates :condition_id, presence: true
-  validates :fee_burden_id, presence: true
-  validates :origin_area_id, presence: true
-  validates :days_until_shipping_id, presence: true
-  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+      t.timestamps
+    end
+  end
 end
