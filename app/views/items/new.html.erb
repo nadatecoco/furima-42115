@@ -5,9 +5,11 @@
   </header>
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
+
     <%= form_with(model: @item, local: true, multipart: true) do |f| %>
 
     <%= render 'shared/error_messages', model: f.object %>
+
 
     <%# 商品画像 %>
     <div class="img-upload">
@@ -19,7 +21,9 @@
         <p>
           クリックしてファイルをアップロード
         </p>
+
         <%= f.file_field :image, id:"item-image" %>
+
       </div>
     </div>
     <%# /商品画像 %>
@@ -29,13 +33,17 @@
         商品名
         <span class="indispensable">必須</span>
       </div>
+
       <%= f.text_area :title, class:"items-text", id:"item-name", placeholder:"商品名（必須 40文字まで)", maxlength:"40" %>
+
       <div class="items-explain">
         <div class="weight-bold-text">
           商品の説明
           <span class="indispensable">必須</span>
         </div>
+
         <%= f.text_area :description, class:"items-text", id:"item-info", placeholder:"商品の説明（必須 1,000文字まで）..." ,rows:"7" ,maxlength:"1000" %>
+
       </div>
     </div>
     <%# /商品名と商品説明 %>
@@ -48,12 +56,16 @@
           カテゴリー
           <span class="indispensable">必須</span>
         </div>
+
         <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"select-box", id:"item-category"}) %>
+
         <div class="weight-bold-text">
           商品の状態
           <span class="indispensable">必須</span>
         </div>
+
         <%= f.collection_select(:condition_id, Condition.all, :id, :name, {}, {class:"select-box", id:"item-sales-status"}) %>
+
       </div>
     </div>
     <%# /商品の詳細 %>
@@ -69,17 +81,23 @@
           配送料の負担
           <span class="indispensable">必須</span>
         </div>
+
         <%= f.collection_select(:fee_burden_id, FeeBurden.all, :id, :name, {}, {class:"select-box", id:"item-shipping-fee-status"}) %>
+
         <div class="weight-bold-text">
           発送元の地域
           <span class="indispensable">必須</span>
         </div>
+
         <%= f.collection_select(:origin_area_id, OriginArea.all, :id, :name, {}, {class:"select-box", id:"item-prefecture"}) %>
+
         <div class="weight-bold-text">
           発送までの日数
           <span class="indispensable">必須</span>
         </div>
+
         <%= f.collection_select(:days_until_shipping_id, DaysUntilShipping.all, :id, :name, {}, {class:"select-box", id:"item-scheduled-delivery"}) %>
+
       </div>
     </div>
     <%# /配送について %>
@@ -97,7 +115,9 @@
             <span class="indispensable">必須</span>
           </div>
           <span class="sell-yen">¥</span>
+
           <%= f.text_field :price, class:"price-input", id:"item-price", placeholder:"例）300" %>
+
         </div>
         <div class="price-content">
           <span>販売手数料 (10%)</span>
