@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_10_034106) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_20_000002) do
   create_table "buyers", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "item_id", null: false
     t.bigint "user_id", null: false
