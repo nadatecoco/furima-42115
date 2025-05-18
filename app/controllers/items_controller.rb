@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    @item = Item.includes(:user, :buyer, :fee_burden).find(params[:id])
   end
 
   def create
