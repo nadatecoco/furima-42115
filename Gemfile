@@ -78,3 +78,5 @@ end
 gem 'active_hash'
 gem 'devise'
 gem 'pg', '~> 1.4'
+
+gem 'payjp'
