@@ -64,6 +64,15 @@ RSpec.describe BuyersController, type: :controller do
           post :create, params: valid_params
           expect(response).to redirect_to(root_path)
         end
+
+        it '支払い処理が実行される' do
+          expect(Payjp::Charge).to receive(:create).with(
+            amount: item.price,
+            card: valid_params[:token],
+            currency: 'jpy'
+          )
+          post :create, params: valid_params
+        end
       end
 
       context 'パラメータが不正な場合' do
@@ -82,6 +91,33 @@ RSpec.describe BuyersController, type: :controller do
           post :create, params: { item_id: item.id, buyer_address: { postal_code: '' } }
           expect(assigns(:buyer_address).errors.full_messages).to include("Postal code can't be blank")
         end
+
+        it '支払い処理が実行されない' do
+          expect(Payjp::Charge).not_to receive(:create)
+          post :create, params: { item_id: item.id, buyer_address: { postal_code: '' } }
+        end
+      end
+
+      context '支払い処理が失敗した場合' do
+        before do
+          allow(Payjp::Charge).to receive(:create).and_raise(Payjp::CardError.new('カードエラー', 'card_error', 400))
+        end
+
+        it '購入情報が保存されない' do
+          expect do
+            post :create, params: valid_params
+          end.not_to change(Buyer, :count)
+        end
+
+        it 'indexアクションにレンダリングされる' do
+          post :create, params: valid_params
+          expect(response).to render_template :index
+        end
+
+        it 'エラーメッセージが表示される' do
+          post :create, params: valid_params
+          expect(assigns(:buyer_address).errors.full_messages).to include('カード情報を正しく入力してください')
+        end
       end
     end
 
@@ -89,6 +125,11 @@ RSpec.describe BuyersController, type: :controller do
       it 'ログインページにリダイレクトされる' do
         post :create, params: valid_params
         expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it '支払い処理が実行されない' do
+        expect(Payjp::Charge).not_to receive(:create)
+        post :create, params: valid_params
       end
     end
   end

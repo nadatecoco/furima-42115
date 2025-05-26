@@ -150,4 +150,58 @@ RSpec.describe BuyerAddress, type: :model do
       end
     end
   end
+
+  describe 'トランザクション処理' do
+    context '正常系' do
+      it 'トランザクション内で全てのレコードが作成される' do
+        expect do
+          @buyer_address.save
+        end.to change(Buyer, :count).by(1).and change(Address, :count).by(1)
+      end
+
+      it '作成されたレコードが正しく関連付けられている' do
+        @buyer_address.save
+        buyer = Buyer.last
+        address = Address.last
+        expect(address.buyer_id).to eq buyer.id
+      end
+    end
+
+    context '異常系' do
+      it 'Addressの作成に失敗した場合、Buyerも作成されない' do
+        allow(Address).to receive(:create!).and_raise(ActiveRecord::RecordInvalid.new(Address.new))
+        expect do
+          @buyer_address.save
+        end.not_to change(Buyer, :count)
+      end
+
+      it 'Buyerの作成に失敗した場合、Addressも作成されない' do
+        allow(Buyer).to receive(:create!).and_raise(ActiveRecord::RecordInvalid.new(Buyer.new))
+        expect do
+          @buyer_address.save
+        end.not_to change(Address, :count)
+      end
+
+      it 'バリデーションエラー時はトランザクションがロールバックされる' do
+        @buyer_address.postal_code = ''
+        expect do
+          @buyer_address.save
+        end.not_to change(Buyer, :count)
+        expect do
+          @buyer_address.save
+        end.not_to change(Address, :count)
+      end
+    end
+  end
+
+  describe 'その他' do
+    it 'ActiveModelとして振る舞うことができる' do
+      expect(BuyerAddress.included_modules).to include(ActiveModel::Model)
+    end
+
+    it '属性のアクセサが正しく機能する' do
+      @buyer_address.postal_code = '999-9999'
+      expect(@buyer_address.postal_code).to eq '999-9999'
+    end
+  end
 end
