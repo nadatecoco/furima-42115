@@ -7,7 +7,9 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  if config.active_record.respond_to?(:async_query_executor=)
+    config.active_record.async_query_executor = :inline  # :global_thread_pool → :inline
+  end
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
@@ -22,6 +24,9 @@ Rails.application.configure do
   config.public_file_server.headers = {
     "Cache-Control" => "public, max-age=#{1.hour.to_i}"
   }
+
+  # Default to Japanese so validation messages match the specs
+  config.i18n.default_locale = :ja
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
@@ -39,9 +44,6 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  # Tell Action Mailer not to deliver emails to the real world.
-  # The :test delivery method accumulates sent emails in the
-  # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
   # Print deprecation notices to the stderr.
