@@ -4,14 +4,14 @@ class BuyersController < ApplicationController
 
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-    @buyer = Buyer.new
+    @buyer_address = BuyerAddress.new
   end
 
   def create
-    @buyer = Buyer.new(buyer_params)
-    if @buyer.valid?
+    @buyer_address = BuyerAddress.new(buyer_params)
+    if @buyer_address.valid?
       pay_item
-      @buyer.save
+      @buyer_address.save
       redirect_to root_path
     else
       gon.public_key = ENV['PAYJP_PUBLIC_KEY']
