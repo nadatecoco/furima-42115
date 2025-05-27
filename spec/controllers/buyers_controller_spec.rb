@@ -96,6 +96,13 @@ RSpec.describe BuyersController, type: :controller do
           expect(Payjp::Charge).not_to receive(:create)
           post :create, params: { item_id: item.id, buyer_address: { postal_code: '' } }
         end
+
+        it 'トークンが空の場合は購入できない' do
+          expect do
+            post :create, params: { item_id: item.id, buyer_address: valid_params[:buyer_address], token: '' }
+          end.not_to change(Buyer, :count)
+          expect(assigns(:buyer_address).errors[:token]).to include('を入力してください')
+        end
       end
 
       context '支払い処理が失敗した場合' do
