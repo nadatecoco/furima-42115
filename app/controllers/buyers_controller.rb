@@ -9,7 +9,7 @@ class BuyersController < ApplicationController
   end
 
   def create
-    @buyer_address = BuyerAddress.new(buyer_params)
+    @buyer_address = BuyerAddress.new(buyer_address_params)
 
     if @buyer_address.valid?
       pay_item
@@ -36,7 +36,7 @@ class BuyersController < ApplicationController
   def pay_item
     Payjp.api_key = Rails.application.credentials.payjp[:secret_key]
     Payjp::Charge.create(
-      amount: buyer_address_params[:price],
+      amount: @item.price,
       card: buyer_address_params[:token],
       currency: 'jpy'
     )

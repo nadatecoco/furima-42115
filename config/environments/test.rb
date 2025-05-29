@@ -25,9 +25,6 @@ Rails.application.configure do
     "Cache-Control" => "public, max-age=#{1.hour.to_i}"
   }
 
-  # Default to Japanese so validation messages match the specs
-  config.i18n.default_locale = :ja
-
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
