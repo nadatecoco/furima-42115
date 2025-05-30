@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Devise::Controllers::Helpers
   before_action :basic_auth, if: -> { Rails.env.production? }
-  before_action :configure_permitted_parameters, if: :devise_controller
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   private
 
