@@ -29,12 +29,14 @@ class BuyersController < ApplicationController
 
   def buyer_address_params
     params.require(:buyer_address).permit(:postal_code, :prefecture_id, :city, :addresses, :building, :phone_number).merge(
-      user_id: current_user.id, item_id: @item.id, token: params[:token]
+      user_id: current_user.id,
+      item_id: @item.id,
+      token: params[:token]
     )
   end
 
   def pay_item
-    Payjp.api_key = Rails.application.credentials.payjp[:secret_key]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: buyer_address_params[:token],
