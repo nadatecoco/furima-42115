@@ -8,34 +8,38 @@ RSpec.describe Address, type: :model do
   end
 
   describe 'バリデーション' do
+    before do
+      @address = build(:address)
+    end
+
     it 'postal_codeが必須' do
-      address = build(:address, postal_code: nil)
-      expect(address).not_to be_valid
+      @address.postal_code = nil
+      expect(@address).not_to be_valid
     end
 
     it 'prefecture_idが必須' do
-      address = build(:address, prefecture_id: nil)
-      expect(address).not_to be_valid
+      @address.prefecture_id = nil
+      expect(@address).not_to be_valid
     end
 
     it 'cityが必須' do
-      address = build(:address, city: nil)
-      expect(address).not_to be_valid
+      @address.city = nil
+      expect(@address).not_to be_valid
     end
 
     it 'addressesが必須' do
-      address = build(:address, addresses: nil)
-      expect(address).not_to be_valid
+      @address.addresses = nil
+      expect(@address).not_to be_valid
     end
 
     it 'phone_numberが必須' do
-      address = build(:address, phone_number: nil)
-      expect(address).not_to be_valid
+      @address.phone_number = nil
+      expect(@address).not_to be_valid
     end
 
     it 'buyer_idが必須' do
-      address = build(:address, buyer: nil)
-      expect(address).not_to be_valid
+      @address.buyer = nil
+      expect(@address).not_to be_valid
     end
   end
 end

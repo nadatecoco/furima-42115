@@ -16,14 +16,18 @@ RSpec.describe Buyer, type: :model do
   end
 
   describe 'バリデーション' do
+    before do
+      @buyer = build(:buyer)
+    end
+
     it 'user_idが必須' do
-      buyer = build(:buyer, user: nil)
-      expect(buyer).not_to be_valid
+      @buyer.user = nil
+      expect(@buyer).not_to be_valid
     end
 
     it 'item_idが必須' do
-      buyer = build(:buyer, item: nil)
-      expect(buyer).not_to be_valid
+      @buyer.item = nil
+      expect(@buyer).not_to be_valid
     end
   end
 end
