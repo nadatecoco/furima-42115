@@ -2,6 +2,7 @@ class BuyersController < ApplicationController
   include Devise::Controllers::Helpers
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
+  before_action :move_to_index, only: [:index, :create]
 
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
@@ -24,7 +25,19 @@ class BuyersController < ApplicationController
   private
 
   def set_item
-    @item = Item.find(params[:item_id])
+    @item = Item.includes(:buyer).find(params[:item_id])
+  end
+
+  def move_to_index
+    if current_user.id == @item.user_id
+      redirect_to root_path
+      return
+    end
+
+    return unless @item.buyer.present?
+
+    redirect_to root_path
+    nil
   end
 
   def buyer_address_params
