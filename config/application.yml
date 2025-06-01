@@ -1,0 +1,2 @@
+PAYJP_PUBLIC_KEY: <%= Rails.application.credentials.payjp[:public_key] %>
+PAYJP_SECRET_KEY: <%= Rails.application.credentials.payjp[:secret_key] %> 

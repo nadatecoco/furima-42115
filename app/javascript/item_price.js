@@ -1,5 +1,10 @@
 const price = () => {                              
-  const priceInput   = document.getElementById('item-price');
+  const priceInput = document.getElementById('item-price');
+
+  if (!priceInput) {
+    return;
+  }
+  
   priceInput.addEventListener('input', () => {
     const inputValue = priceInput.value;
     
